@@ -1,0 +1,71 @@
+<app-nav-bar></app-nav-bar>
+<app-side-bar></app-side-bar>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Module permission</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Home</a></li>
+                        <li class="breadcrumb-item"><a routerLink="/admin/role">Roles</a></li>
+                        <li class="breadcrumb-item active">Module Permission</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                <div class="alert alert-success" *ngIf="message">
+                    {{message}}
+                </div>
+            </div>
+
+            <form [formGroup]="moduleForm" (ngSubmit)="onSubmit()">
+                <div class="card" *ngFor="let module of modulesData">
+                    <div class="card-header">
+                        <!-- <input type="checkbox" value="{{module.module_slug}}" (change)="selectMainModule($event)" [checked]="mainModuleCheck(module.module_slug)">
+                        {{module.title}} -->
+                        <div class="form-group clearfix mb-0">
+                            <div class="icheck-primary d-inline">
+                                <input type="checkbox" id="{{module._id}}" value="{{module.module_slug}}" (change)="selectMainModule($event)" [checked]="mainModuleCheck(module.module_slug)">
+                        
+                                <label for="{{module._id}}">
+                                    {{module.title}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3" *ngFor="let sub_module of module.sub_module">
+                                <!-- checkbox -->
+                                <div class="form-group clearfix">
+                                    <div class="icheck-primary d-inline">
+                                        <input type="checkbox" id="{{sub_module._id}}"
+                                            [value]="sub_module.sub_module_slug" (change)="onCheckedchange($event)"
+                                            [checked]="checkValue(sub_module.sub_module_slug)">
+                                           
+                                        <label for="{{sub_module._id}}">
+                                            {{sub_module.sub_module_title}}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-success">Save</button>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+<app-footer></app-footer>

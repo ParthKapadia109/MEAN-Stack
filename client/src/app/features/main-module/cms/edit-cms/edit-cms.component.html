@@ -1,0 +1,151 @@
+<app-nav-bar></app-nav-bar>
+<app-side-bar></app-side-bar>
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">CMS</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Home</a></li>
+                        <li class="breadcrumb-item active"><a routerLink="/admin/cms">CMS</a></li>
+                        <li class="breadcrumb-item active">Edit CMS</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-success" *ngIf="message">
+                        <span>{{message}}</span>
+                    </div>
+                    <div class="alert alert-danger" *ngIf="error">
+                        <span>{{error}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title mb-0">
+                                Edit CMS
+                            </div>
+                        </div>
+                        <form [formGroup]="cmsForm" (ngSubmit)="onSubmit()">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class=form-group>
+                                            <label>Title</label>
+                                            <input class="form-control" name="title" formControlName="title" minlength="4" maxlength="100" [ngClass]="{ 'is-invalid': submit && f.title.errors }" placeholder="Title" />
+                                            <div *ngIf="submit && f.title.errors">
+                                                <div *ngIf="submit && f.title.errors.required">
+                                                    <span class="invaild-feedback">The title field is required.</span>
+                                                </div>
+                                                <div *ngIf="submit && f.title.errors?.minlength">
+                                                    <span class="invaild-feedback">The title must be at least minimum 4 & maximum 100 characters.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class=form-group>
+                                            <label>Hading</label>
+                                            <input class="form-control" name="hading" formControlName="hading" minlength="4" maxlength="100" [ngClass]="{ 'is-invalid': submit && f.hading.errors }" placeholder="Hading"  />
+                                            <div *ngIf="submit && f.hading.errors">
+                                                <div *ngIf="submit && f.hading.errors.required">
+                                                    <span class="invaild-feedback">The hading field is required.</span>
+                                                </div>
+                                                <div *ngIf="submit && f.hading.errors?.minlength">
+                                                    <span class="invaild-feedback">The hading must be at least minimum 4 & maximum 100 characters.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <quill-editor 
+                                                [styles]="{height: '200px'}" 
+                                                formControlName="description"
+                                            ></quill-editor>
+                                            <div *ngIf="submit && f.description.errors">
+                                                <div *ngIf="submit && f.description.errors.required">
+                                                    <span class="invaild-feedback">The description field is required.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Header</label>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="customSwitchesHeader"
+                                                name="header" formControlName="header">
+                                                <label class="custom-control-label" for="customSwitchesHeader">On/Off</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Footer</label>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="customSwitchesFooter"
+                                                name="footer" formControlName="footer">
+                                                <label class="custom-control-label" for="customSwitchesFooter">On/Off</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Status</label>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="customSwitchesStatus"
+                                                name="status" formControlName="status" >
+                                                <label class="custom-control-label" for="customSwitchesStatus">Active/Desactive</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class=form-group>
+                                            <label>Slug</label>
+                                            <input class="form-control" name="slug" minlength="4" maxlength="100" formControlName="slug" [ngClass]="{ 'is-invalid': submit && f.slug.errors }" placeholder="Slug" />
+                                            <div *ngIf="submit && f.slug.errors">
+                                                <div *ngIf="submit && f.slug.errors.required">
+                                                    <span class="invaild-feedback">The slug field is required.</span>
+                                                </div>
+                                                <div *ngIf="submit && f.slug.errors?.minlength">
+                                                    <span class="invaild-feedback">The Slug must be at least minimum 4 & maximum 100 characters.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-success"> Save </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+<app-footer></app-footer>

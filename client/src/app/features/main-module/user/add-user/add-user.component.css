@@ -1,0 +1,15 @@
+.btn {
+    margin:5px;
+}
+
+.alert-error {
+    color: red;
+    margin: -26px 0px 0px -19px;
+}
+
+.margin-top-12 {
+    margin-top: -12px;
+}
+a:hover {
+    text-decoration: none; 
+}   

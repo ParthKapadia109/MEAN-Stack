@@ -1,0 +1,197 @@
+<app-nav-bar></app-nav-bar>
+<app-side-bar></app-side-bar>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">User</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Home</a></li>
+                        <li class="breadcrumb-item"><a routerLink="/admin/user">Users</a></li>
+                        <li class="breadcrumb-item active">Add User</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                <div class="alert alert-success" role="alert" *ngIf="message">
+                    <span>{{message}}</span>
+                </div>
+                <div class="alert alert-danger" role="alert" *ngIf="error.password || error.user_name || error.role">
+                    <span *ngIf="error.password">{{error.password}}</span>
+                    <span *ngIf="error.user_name">{{error.user_name}}</span>
+                    <span *ngIf="error.role">{{error.role}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="fa fa-user-plus"></span> Create a new user
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                            </div>
+                                            <input appOnlyLetter type="text" class="form-control" minlength="4" maxlength="30" placeholder="Name"
+                                                formControlName="user_name"
+                                                [ngClass]="{ 'is-invalid': submitted && f.user_name.errors }">
+                                        </div>
+                                        <div class="alert alert-error" *ngIf="submitted && f.user_name.errors">
+                                            <div *ngIf="submitted && f.user_name.errors.required">
+                                                <span>The name field is required.</span>
+                                            </div>
+                                            <div *ngIf="submitted && f.user_name.errors.pattern">
+                                                <span>The name field allow only characters.</span>
+                                            </div>
+                                            <div *ngIf="submitted && f.user_name.errors?.minlength">
+                                                The name must be at least minimum 4 & maximum 30 characters.
+                                            </div>
+                                            <div *ngIf="submitted && f.user_name.errors?.maxlength">
+                                                The name must be at least minimum 4 & maximum 30 characters.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                                            </div>
+                                            <input type="email" class="form-control" placeholder="Email"
+                                                formControlName="email"
+                                                [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                                        </div>
+                                        <div class="alert alert-error" *ngIf="submitted && f.email.errors">
+                                            <div *ngIf="submitted && f.email.errors.required">
+                                                <span>The email field is required.</span>
+                                            </div>
+                                            <div *ngIf="submitted && f.email.errors.pattern">
+                                                <span>The email is invalid.</span>
+                                            </div>
+                                        </div>
+                                        <div class="alert alert-error" *ngIf="submitted && error">
+                                            <span>{{error.email}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                                            </div>
+                                            <input type="password" class="form-control" maxlength="12" minlength="6"
+                                                placeholder="Password" formControlName="password"
+                                                [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                                        </div>
+                                        <div class="alert alert-error" *ngIf="submitted && f.password.errors">
+                                            <div *ngIf="submitted && f.password.errors.required">
+                                                <span>The password field is required.</span>
+                                            </div>
+                                            <div *ngIf="submitted && f.password.errors?.minlength">
+                                                The password must be at least minimum 6 & maximum 12 characters.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                                            </div>
+                                            <input type="password" class="form-control" placeholder="Confirm Password"
+                                                formControlName="confirm_password"
+                                                [ngClass]="{ 'is-invalid': submitted && f.confirm_password.errors }"
+                                                (change)="pwdMatch()">
+                                        </div>
+                                        <div class="alert alert-error" *ngIf="submitted && f.confirm_password.errors">
+                                            <div *ngIf="submitted && f.confirm_password.errors.required || confirmPwdError">
+                                                <span>The confirm password field is required.</span>
+                                            </div>
+                                            <div class="alert alert-error" *ngIf="confirmPwdError">
+                                                <span>{{confirmPwdError}}</span>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="alert alert-error" *ngIf="confirmPwdError">
+                                            <span>{{confirmPwdError}}</span>
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Selete Role</label>
+                                            <select class="form-control" formControlName="role">
+                                                <option value="1" disabled><span>Select Role</span></option>
+                                                <option *ngFor="let role of roleData" [value]="role.role_slug">
+                                                    {{role.role_name}}
+                                                </option>
+                                            </select>
+                                            <div class="alert alert-error margin-top-12"
+                                                *ngIf="submitted && f.role.errors">
+                                                <div *ngIf="submitted && f.role.errors.required">
+                                                    <span>The role field is required.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="d-block mb-3">Status</label>
+                                            <div class="custom-control custom-radio">
+                                                <input class="custom-control-input" type="radio" id="customRadio1" name="user_status" formControlName="user_status"
+                                                    [value]=true>
+                                                <label for="customRadio1" class="custom-control-label">Active</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input class="custom-control-input" type="radio" id="customRadio2" name="user_status" formControlName="user_status"
+                                                    [value]=false>
+                                                <label for="customRadio2" class="custom-control-label">Inactive</label>
+                                            </div>
+                                            <div class="alert alert-error margin-top-12"
+                                                *ngIf="submitted && f.user_status.errors">
+                                                <div *ngIf="submitted && f.user_status.errors.required">
+                                                    <span>The status field is required.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Sidebar Toggle</label>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="customSwitches"
+                                                    name="sidebar_toggle" formControlName="sidebar_toggle">
+                                                <label class="custom-control-label" for="customSwitches">On/Off</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-success">Save</button>
+                                <!-- <button class="btn btn-danger" type="button">Cancel</button> -->
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<app-footer></app-footer>

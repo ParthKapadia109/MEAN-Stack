@@ -1,0 +1,14 @@
+.btn {
+    margin: 5px;
+}
+
+.alert-error {
+    color: red;
+    margin: -26px 0px 0px -19px;
+}
+a:hover {
+    text-decoration: none; 
+} 
+.card-footer a:focus{
+    outline-offset: 0;
+}

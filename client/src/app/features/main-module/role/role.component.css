@@ -1,0 +1,24 @@
+.btn {
+    margin: 5px;
+}
+
+.slug {
+    font-size: 12px;
+}
+
+.card-title {
+    margin: 0;
+}
+
+.alert-error {
+    color: red;
+    margin: -13px 0px 0px -19px;
+}
+
+span.badge {
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration : none;
+}

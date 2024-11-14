@@ -1,0 +1,187 @@
+<app-nav-bar></app-nav-bar>
+<app-side-bar></app-side-bar>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Roles</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Home</a></li>
+                        <li class="breadcrumb-item active">Roles</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                <div class="alert-success alert" role="alert" *ngIf="message">
+                    <span>{{message}}</span>
+                </div>
+                <div class="alert-danger alert" role="alert" *ngIf="errors">
+                    <span>{{errors}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div *ngIf="currentUserPermission.includes('view-role')"
+                    [class]="currentUserPermission.includes('add-role') ? 'col-md-8' : 'col-md-12'">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">
+                                Manage Role & Permission
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <!-- <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Role</th>
+                                        <th>Status</th>
+                                        <th *ngIf="currentUserPermission.includes('edit-role') || currentUserPermission.includes('delete-role') || currentUserPermission.includes('role-permission')">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let role of roleData; index as i">
+                                        <td>{{i+1}}</td>
+                                        <td>
+                                            {{role.role_name}} <br>
+                                            <span class="slug">{{role.role_slug}}</span>
+                                        </td>
+                                        <td>{{role.role_status === true ? "Active" : "Deactivate"}}</td>
+                                        <td *ngIf="currentUserPermission.includes('edit-role') || currentUserPermission.includes('delete-role') || currentUserPermission.includes('role-permission')">
+                                            <a [routerLink]="['/admin/modules-permission', role.role_slug]" *ngIf="currentUserPermission.includes('role-permission')">
+                                                <button class="btn btn-info"><span class="fa fa-lock"></span></button>
+                                            </a>
+                                            <button class="btn btn-warning" *ngIf="currentUserPermission.includes('edit-role')" (click)="editRole(role.role_slug)"><span class="fa fa-edit"></span></button>
+                                            <button class="btn btn-danger" *ngIf="currentUserPermission.includes('delete-role')" (click)="deleteRoleData(role.role_slug)"><span class="fa fa-trash"></span></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table> -->
+                            <div class="col-lg-12">
+                                <input type="text"
+                                    style="padding:8px;margin:15px auto;width:30%;float:right;width: 200px;"
+                                    placeholder="Type to filter data..." (keyup)="updateFilter($event)" />
+                                <ngx-datatable #table class='bootstrap table' [columnMode]="ColumnMode.force"
+                                    [headerHeight]="'auto'" [footerHeight]="'auto'" [rowHeight]="'auto'" [limit]="2"
+                                    [rows]='roleData' [scrollbarH]="true">
+                                    <ngx-datatable-column [sortable]="true" name="Role Name" prop="role_name">
+                                        <ng-template let-row="row" ngx-datatable-cell-template>
+                                            {{row.role_name }} <br />
+                                            <!-- <span class="badge bg-warning">{{row.role_slug}}</span> -->
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column [sortable]="true" name="Status" prop="role_status">
+                                        <ng-template let-row="row" ngx-datatable-cell-template>
+                                            <!-- <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="customSwitch{{row._id}}" [checked]="checkedSwitch(row.role_status)" (change)="onChangeStatus(row._id, row.role_slug, row.role_status)">
+                                                <label class="custom-control-label" for="customSwitch{{row._id}}">
+                                                    <span _ngcontent-sbo-c96="" class="badge" [class]="row.role_status ? 'bg-success' : 'bg-danger'">
+                                                        {{row.role_status ? 'Active' : 'Inactive' | titlecase}}
+                                                    </span>
+                                                </label>
+                                              </div> -->
+                                            <h5><span _ngcontent-sbo-c96="" class="badge"
+                                                [class]="row.role_status ? 'bg-success' : 'bg-danger'" (click)="onChangeStatus(row._id, row.role_slug, row.role_status)">
+                                                {{row.role_status ? 'Active' : 'Inactive' | titlecase}}
+                                            </span></h5>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Action" [sortable]="false">
+                                        <ng-template let-row="row" ngx-datatable-cell-template>
+                                            <div
+                                                *ngIf="currentUserPermission.includes('edit-role') || currentUserPermission.includes('delete-role') || currentUserPermission.includes('role-permission')">
+                                                <a [routerLink]="['/admin/modules-permission', row.role_slug]"
+                                                    *ngIf="currentUserPermission.includes('role-permission') && row.role_slug != 'user'">
+                                                    <button class="btn btn-sm btn-info"><span
+                                                            class="fa fa-lock"></span></button>
+                                                </a>
+                                                <button class="btn btn-sm btn-warning"
+                                                    *ngIf="currentUserPermission.includes('edit-role') && row.role_slug != 'user'"
+                                                    (click)="editRole(row.role_slug)"><span
+                                                        class="fa fa-edit"></span></button>
+                                                <button class="btn btn-sm btn-danger"
+                                                    *ngIf="currentUserPermission.includes('delete-role') && row.role_slug != 'user'"
+                                                    (click)="deleteRoleData(row.role_slug)"><span
+                                                        class="fa fa-trash"></span></button>
+                                                <span *ngIf="row.role_slug == 'user'" class="text-center"> - </span>
+                                            </div>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                </ngx-datatable>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="currentUserPermission.includes('add-role') || currentUserPermission.includes('edit-role')"
+                    [class]="currentUserPermission.includes('view-role') ? 'col-md-4' : 'col-md-12'">
+                    <div class="card" style.display="{{display}}">
+                        <div class="card-header">
+                            <div class="card-title">
+                                {{title}} Role
+                            </div>
+                        </div>
+                        <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="role_name">Role</label>
+                                    <input type="text" id="role_name" class="form-control" minlength="3"
+                                        placeholder="Role" formControlName="role_name"
+                                        [ngClass]="{ 'is-invalid': submitted && f.role_name.errors }" />
+                                    <div class="alert alert-error" *ngIf="submitted && f.role_name.errors">
+                                        <div *ngIf="submitted && f.role_name.errors.required">
+                                            Role name is required.
+                                        </div>
+                                        <div *ngIf="submitted && f.role_name.errors?.minlength">
+                                            Role name is minimun 3 charcter.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Status</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="role_status"
+                                            id="exampleRadios1" [value]=true formControlName="role_status">
+                                        <label class="form-check-label" for="exampleRadios1">
+                                            Active
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="role_status"
+                                            id="exampleRadios2" [value]=false formControlName="role_status">
+                                        <label class="form-check-label" for="exampleRadios2">
+                                            Deactivate
+                                        </label>
+                                    </div>
+                                    <div class="alert alert-error" *ngIf="submitted && f.role_status.errors">
+                                        <div *ngIf="submitted && f.role_status.errors.required">
+                                            Role status is required.
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-success" type="submit">
+                                    {{title}} Role
+                                </button>
+
+                                <button type="button" [style.display]="title=='Edit' ? '' : 'none'"
+                                    class="btn btn-danger" (click)="resetForm()">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<app-footer></app-footer>

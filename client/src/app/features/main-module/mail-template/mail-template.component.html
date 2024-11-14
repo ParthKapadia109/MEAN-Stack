@@ -1,0 +1,100 @@
+<app-nav-bar></app-nav-bar>
+<app-side-bar></app-side-bar>
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Mail Templates</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Home</a></li>
+                        <li class="breadcrumb-item active">Mail Templates</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-success" *ngIf="message">{{message}}</div>
+                    <div class="alert alert-danger" *ngIf="error">{{error}}</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title mb-0">
+                                Manage Mail Templates
+                            </div>
+                            <div class="card-tools">
+                                <a routerLink="/admin/add-mail-template" *ngIf="currentUserPermission.includes('add-mail-template')">
+                                    <button type="button" class="btn btn-tool btn-primary" data-card-widget="collapse">
+                                        <i class="fas fa-plus"></i> Add Mail Template
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-lg-12">
+                                <input type="text"
+                                    style="padding:8px;margin:15px auto;width:30%;float:right;width: 200px;"
+                                    placeholder="Type to filter data..." (keyup)="updateFilter($event)" />
+
+                                <ngx-datatable #table class='bootstrap table' [columnMode]="ColumnMode.force"
+                                    [headerHeight]="'auto'" [footerHeight]="'auto'" [rowHeight]="'auto'" [limit]="2"
+                                    [rows]='mailData' [scrollbarH]="true">
+                                    <ngx-datatable-column [sortable]="true" name="Template Name" prop="template_name">
+                                        <ng-template let-row="row" ngx-datatable-cell-template>
+                                            {{row.template_name | titlecase}} <br />
+                                            <!-- <span class="badge bg-warning">{{row.slug}}</span> -->
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column [sortable]="true" name="Subject" prop="subject">
+                                        <ng-template let-row="row" ngx-datatable-cell-template>{{row.subject |
+                                            titlecase}}</ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column [sortable]="true" name="Description" prop="description">
+                                        <ng-template let-row="row" ngx-datatable-cell-template>
+                                            <div [innerHTML]="row.description.substr(0, 200)"></div>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    
+                                    
+                                    <ngx-datatable-column [sortable]="true" name="Status" prop="status">
+                                        <ng-template let-row="row" ngx-datatable-cell-template>
+                                            <h5><span _ngcontent-sbo-c96="" class="badge badge-hover"
+                                                [class]="row.status ? 'bg-success' : 'bg-danger'" (click)="onChangeStatus(row._id, row.status)">
+                                                {{row.status ? 'Active' : 'Inactive' | titlecase}}
+                                            </span></h5>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Action">
+                                        <ng-template let-row="row" ngx-datatable-cell-template>
+                                            <div *ngIf="currentUserPermission.includes('edit-mail-template') || currentUserPermission.includes('delete-mail-template')">
+                                                <a [routerLink]="['/admin/edit-mail-template', row.slug , row._id]" *ngIf="currentUserPermission.includes('edit-mail-template')">
+                                                    <button type="button" class="btn-icon btn btn-warning mr-2"><i
+                                                            class="fas fa-edit"></i></button>
+                                                </a>
+                                                <button type="button" class="btn-icon btn btn-danger"
+                                                    (click)="deleteMailTemplate(row._id)" *ngIf="currentUserPermission.includes('delete-mail-template') && row.slug != 'forgot-password'"><i
+                                                        class="fas fa-trash"></i></button>
+                                            </div>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                </ngx-datatable>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+<app-footer></app-footer>

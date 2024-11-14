@@ -1,0 +1,9 @@
+.user_slug {
+    font-size: 12px;
+}
+.logout {
+    cursor: pointer;
+}
+.elevation-3 {
+    box-shadow: none !important;
+}

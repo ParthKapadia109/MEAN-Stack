@@ -1,0 +1,206 @@
+<app-nav-bar></app-nav-bar>
+<app-side-bar></app-side-bar>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Profile</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Home</a></li>
+                        <li class="breadcrumb-item active">Profile</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                <div class="alert-success alert" role="alert" *ngIf="message">
+                    <span>{{message}}</span>
+                </div>
+                <div class="alert-danger alert" role="alert" *ngIf="errors">
+                    <span>{{errors}}</span>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="fa fa-user"></span> Profile
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text"><i class="fa fa-user" aria-hidden="true"></i></span>
+                                            </div>
+                                            <input appOnlyLetter type="text" class="form-control" minlength="2" maxlength="30" placeholder="Name" formControlName="user_name" [ngClass]="{ 'is-invalid': submitted && f.user_name.errors }">
+                                        </div>
+                                        <div class="alert alert-error" *ngIf="submitted && f.user_name.errors">
+                                            <div *ngIf="submitted && f.user_name.errors.required">
+                                                <span>The name field is required.</span>
+                                            </div>
+                                            <div *ngIf="submitted && f.user_name.errors.pattern">
+                                                <span>The name field allows only characaters.</span>
+                                            </div>
+                                            <div *ngIf="submitted && f.user_name.errors?.minlength">
+                                                The name must be at least minimum 2 & maximum 30 characters.
+                                            </div>
+                                            <div *ngIf="submitted && f.user_name.errors?.maxlength">
+                                                The name must be at least minimum 2 & maximum 30 characters.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text">@</span>
+                                            </div>
+                                            <input type="text" [readonly]="slug == 'supper-admin' ? true : false " class="form-control" minlength="2" maxlength="20" placeholder="Username" formControlName="user_slug" [ngClass]="{ 'is-invalid': submitted && f.user_slug.errors || error.user_slug}">
+                                        </div>
+                                        <div class="alert alert-error" *ngIf="submitted && f.user_slug.errors">
+                                            <div *ngIf="submitted && f.user_slug.errors.required">
+                                                <span>User Name is required!</span>
+                                            </div>
+                                            <div *ngIf="submitted && f.user_slug.errors.pattern">
+                                                <span>Please enter valid user name !</span>
+                                            </div>
+                                            <div *ngIf="submitted && f.user_slug.errors?.minlength">
+                                                The name must be at least minimum 2 & maximum 30 characters.
+                                            </div>
+                                            <div *ngIf="submitted && f.user_slug.errors?.maxlength">
+                                                The name must be at least minimum 2 & maximum 30 characters.
+                                            </div>
+                                        </div>
+                                        <!-- <div class="alert alert-error" *ngIf="error.user_slug">
+                                            <span *ngIf="error.user_slug">{{error.user_slug}}</span>
+                                        </div> -->
+                                        
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                                            </div>
+                                            <input type="email" disabled class="form-control" placeholder="Email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors || error.email}">
+                                        </div>
+                                        <div class="alert alert-error" *ngIf="submitted && f.email.errors">
+                                            <div *ngIf="submitted && f.email.errors.required">
+                                                <span>Email is required!</span>
+                                            </div>
+                                        </div>
+                                        <div class="alert alert-error" *ngIf="error.email">
+                                            {{error.email}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                                            </div>
+                                            <input type="password" minlength="6" maxlength="12" class="form-control" placeholder="Password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors || error.password }">
+                                        </div>
+                                        <div class="alert alert-error" *ngIf="submitted && f.password.errors">
+                                            <div *ngIf="submitted && f.password.errors.required">
+                                                Password is Required!
+                                            </div>
+                                            <div *ngIf="submitted && f.password.errors?.minlength">
+                                                The password must be at least minimum 6 & maximum 12 characters.
+                                            </div>
+                                        </div>
+                                        <div class="alert alert-error" *ngIf="error.password">
+                                            <span *ngIf="error.password">{{error.password}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                                            </div>
+                                            <input type="password" class="form-control" placeholder="Confirm Password" formControlName="confirm_password" [ngClass]="{ 'is-invalid': submitted && f.confirm_password.errors }" (change)="pwdMatch()">
+                                        </div>
+                                        <div class="alert alert-error" *ngIf="submitted && f.confirm_password.errors">
+                                            <div *ngIf="submitted && f.confirm_password.errors.required">
+                                                <span>Confirm password is required!</span>
+                                            </div>
+                                        </div>
+                                        <div class="alert alert-error" *ngIf="confirmPwdError">
+                                            <span>{{confirmPwdError}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <!--<div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Selete Role</label>
+                                            <select class="form-control" formControlName="role" [ngClass]="{ 'is-invalid': submitted && f.role.errors }">
+                                                <option *ngFor="let role of roleData" [value]="role.role_slug">
+                                                    <span *ngIf="role.role_status">{{role.role_name}}</span>
+                                                </option>
+                                            </select>
+                                            <div class="alert alert-error" *ngIf="submitted && f.role.errors">
+                                                <div *ngIf="submitted && f.role.errors.required">
+                                                    <span>Role is Required!</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>-->
+                                    <div class="col-md-6 d-none">
+                                        <div class="form-group">
+                                            <label>Status</label>
+                                            <div class="custom-control custom-radio">
+                                                <input class="custom-control-input" type="radio" id="customRadio1" name="user_status" formControlName="user_status" [value]=true [ngClass]="{ 'is-invalid': submitted && f.user_status.errors }">
+                                                <label for="customRadio1" class="custom-control-label">Active</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input class="custom-control-input" type="radio" id="customRadio2" name="user_status" formControlName="user_status" [value]=false [ngClass]="{ 'is-invalid': submitted && f.user_status.errors }">
+                                                <label for="customRadio2" class="custom-control-label">Disactive</label>
+                                            </div>
+                                            <div class="alert alert-error" *ngIf="submitted && f.user_status.errors">
+                                                <div *ngIf="submitted && f.user_status.errors.required">
+                                                    <span>Status is required!</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Sidebar Toggle</label>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" name="sidebar_toggle" class="custom-control-input" id="customSwitches" formControlName="sidebar_toggle">
+                                                <label class="custom-control-label" for="customSwitches">On/Off</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-success">Save</button>
+                                <a routerLink="/admin/dashboard" class="d-inline-block"><button class="btn btn-danger" type="button">Cancel</button></a>
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<app-footer></app-footer>
+            

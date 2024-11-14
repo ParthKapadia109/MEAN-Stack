@@ -1,0 +1,18 @@
+table tbody tr td div{
+    text-overflow: ellipsis;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+table tbody tr td div h2{
+    font-size: 16px !important;
+    font-weight: normal;
+}
+span.badge {
+    cursor: pointer;
+}
+a:hover {
+    text-decoration : none;
+}

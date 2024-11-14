@@ -1,0 +1,195 @@
+<app-nav-bar></app-nav-bar>
+<app-side-bar></app-side-bar>
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Dashboard</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item active">Dashboard</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>{{roleCounter}}</h3>
+
+                            <p>Role</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-key"></i>
+                        </div>
+                        <a [routerLink]="rolePermission ? '/admin/role' : '/admin/error-403'"
+                            class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>{{moduleCOunter}}</h3>
+
+                            <p>Module</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                        <a [routerLink]="modulePermission ? '/admin/module' : '/admin/error-403'"
+                            class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>{{userCounter}}</h3>
+
+                            <p>User Registrations</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+                        <a [routerLink]="userPermission ? '/admin/user' : '/admin/error-403'"
+                            class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <!-- <div class="col-lg-3 col-6">
+                    
+                    <div class="small-box bg-danger">
+                        <div class="inner">
+                            <h3>65</h3>
+
+                            <p>Unique Visitors</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-pie-graph"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div> -->
+                <!-- ./col -->
+            </div>
+            <div class="row">
+                <section class="col-lg-6 connectedSortable">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title my-1">
+                                <i class="fas fa-chart-pie mr-1"></i>
+                                Pie Chart - Roles
+                            </h3>
+                        </div><!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="tab-content p-0">
+                                <!-- Morris chart - Sales -->
+                                <div class="chart tab-pane active" id="revenue-chart"
+                                    style="position: relative; height: 400px;">
+                                    <canvas 
+                                        baseChart 
+                                        [data]="pieChartData" 
+                                        [labels]="pieChartLabels" 
+                                        [chartType]="pieChartType"
+                                        [options]="pieChartOptions" 
+                                        [plugins]="pieChartPlugins" 
+                                        [colors]="pieChartColors" 
+                                        [legend]="pieChartLegend">
+                                    </canvas>
+                                </div>
+                            </div>
+                        </div><!-- /.card-body -->
+                    </div>
+                </section>
+                <section class="col-lg-6 connectedSortable">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h3 class="card-title w-50 mb-0">
+                                <i class="fas fa-chart-pie mr-1"></i>
+                                Bar Chart - Total Users
+                            </h3>
+
+                            <div class="w-50">
+                                <form [formGroup]="selectedYear" >
+                                    <div class="form-group mb-0 d-flex align-items-center">
+                                        <label for="year" class="w-50 d-block text-right mb-0 pr-2">Select Year</label>
+                                        <select class="form-control form-control-sm w-50" id="year" formControlName="year" (change)="yearWiseBarchart()">
+                                            <option value="all" selected>All Year</option>
+                                            <option *ngFor="let year of years" value="{{year._id.year}}">{{year._id.year}}</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                        </div><!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="tab-content p-0">
+                                <!-- Morris chart - Sales -->
+                                <div class="chart tab-pane active" id="revenue-chart"
+                                    style="position: relative; height: 400px;">
+                                    <canvas baseChart 
+                                        [datasets]="barChartData" 
+                                        [labels]="barChartLabels" 
+                                        [options]="barChartOptions"
+                                        [plugins]="barChartPlugins" 
+                                        [legend]="barChartLegend" 
+                                        [chartType]="barChartType">
+                                    </canvas>
+                                </div>
+                            </div>
+                        </div><!-- /.card-body -->
+                    </div>
+                </section>
+            </div>
+            <div class="row">
+                <section class="col-lg-6 connectedSortable">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h3 class="card-title w-50 mb-0">
+                                <i class="fas fa-chart-pie mr-1"></i>
+                                Doughnut Chart - Role
+                            </h3>
+
+                            <div class="w-50">
+                                <form [formGroup]="selectedMonth" >
+                                    <div class="form-group mb-0 d-flex align-items-center">
+                                        <label for="month" class="w-50 d-block text-right mb-0 pr-2">Select Month</label>
+                                        <select class="form-control form-control-sm w-50" id="month" formControlName="month" (change)="monthWiseDoughnutChart()">
+                                            <option value="all" selected>All Month</option>
+                                            <option *ngFor="let month of months" value="{{month.value}}">{{month.name}}</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                        </div><!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="tab-content p-0">
+                                <!-- Morris chart - Sales -->
+                                <div class="chartjs-container">
+                                    <canvas baseChart 
+                                        [data]="doughnutChartData" 
+                                        [labels]="doughnutChartLabels" 
+                                        [chartType]="doughnutChartType"
+                                        [colors]="doughnutChartColors"
+                                    >
+                                    </canvas>
+                                </div>
+                            </div>
+                        </div><!-- /.card-body -->
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+</div>
+<app-footer></app-footer>

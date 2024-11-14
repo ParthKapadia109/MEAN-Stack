@@ -1,0 +1,117 @@
+<app-nav-bar></app-nav-bar>
+<app-side-bar></app-side-bar>
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">CMS</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Home</a></li>
+                        <li class="breadcrumb-item active">CMS</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-success" *ngIf="message">{{message}}</div>
+                    <div class="alert alert-danger" *ngIf="error">{{error}}</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title mb-0">
+                                Manage CMS
+                            </div>
+                            <div class="card-tools">
+                                <a routerLink="/admin/add-cms" *ngIf="currentUserPermission.includes('add-cms')">
+                                    <button type="button" class="btn btn-tool btn-primary" data-card-widget="collapse">
+                                        <i class="fas fa-plus"></i> Add CMS
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-lg-12" *ngIf="currentUserPermission.includes('view-cms')">
+                                <input
+                                    type="text"
+                                    style="padding:8px;margin:15px auto;width:30%;float:right;width: 200px;"
+                                    placeholder="Type to filter data..."
+                                    (keyup)="updateFilter($event)"
+                                />
+                                
+                                <ngx-datatable
+                                    #table
+                                    class='bootstrap table'
+                                    [columnMode]="ColumnMode.force"
+                                    [headerHeight]="'auto'"
+                                    [footerHeight]="'auto'"
+                                    [rowHeight]="'auto'"
+                                    [limit]="2"
+                                    [rows]='rows'
+                                    [scrollbarH]="true">
+                                    <ngx-datatable-column [sortable]="true" name="Title" prop="title">
+                                        <ng-template let-row="row" ngx-datatable-cell-template>
+                                            {{row.title | titlecase}} <br />
+                                            <!-- <span class="badge bg-warning">{{row.slug}}</span> -->
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                <ngx-datatable-column [sortable]="true" name="Hading" prop="hading">
+                                        <ng-template let-row="row" ngx-datatable-cell-template>{{row.hading | titlecase}}</ng-template>
+                                    </ngx-datatable-column>
+                                    <!-- <ngx-datatable-column [sortable]="true" name="Description" prop="description">
+                                        <ng-template let-row="row" ngx-datatable-cell-template>
+                                            <div [innerHTML]="row.description.substr(0, 200)"></div>
+                                        </ng-template>
+                                    </ngx-datatable-column> -->
+                                    <ngx-datatable-column [sortable]="true" name="Header" prop="header">
+                                        <ng-template let-row="row" ngx-datatable-cell-template>
+                                            <h5><span _ngcontent-sbo-c96="" class="badge" [class]="row.header ? 'bg-success' : 'bg-danger'" (click)="onChangeStatus(row._id, row.status, row.header, row.footer, 'Header')">
+                                                {{row.header ? 'Active' : 'Inactive'}}
+                                            </span></h5>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column [sortable]="true" name="Footer" prop="footer">
+                                        <ng-template let-row="row" ngx-datatable-cell-template>
+                                              <h5><span _ngcontent-sbo-c96="" class="badge" [class]="row.footer ? 'bg-success' : 'bg-danger'" (click)="onChangeStatus(row._id, row.status, row.header, row.footer, 'Footer')">
+                                                {{row.footer ? 'Active' : 'Inactive' | titlecase}}
+                                            </span></h5>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column [sortable]="true" name="Status" prop="status">
+                                        <ng-template let-row="row" ngx-datatable-cell-template>
+                                              <h5><span _ngcontent-sbo-c96="" class="badge" [class]="row.status ? 'bg-success' : 'bg-danger'" (click)="onChangeStatus(row._id, row.status, row.header, row.footer, 'Status')">
+                                                {{row.status ? 'Active' : 'Inactive' | titlecase}}
+                                            </span></h5>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Action" [sortable]="false">
+                                        <ng-template let-row="row" ngx-datatable-cell-template>
+                                            <div *ngIf="currentUserPermission.includes('edit-cms') || currentUserPermission.includes('delete-cms')">
+                                                <a [routerLink]="['/admin/edit-cms', row.slug, row._id]" *ngIf="currentUserPermission.includes('edit-cms')">
+                                                    <button type="button" class="btn-icon btn-sm btn btn-warning mr-2"><i class="fas fa-edit"></i></button>
+                                                </a>
+                                                <button type="button" class="btn-icon btn btn-sm btn-danger" *ngIf="currentUserPermission.includes('delete-cms')" (click)="deleteCMS(row.slug, row._id)" ><i class="fas fa-trash"></i></button>
+                                            </div>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                </ngx-datatable>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </section>
+    
+</div>
+<app-footer></app-footer>

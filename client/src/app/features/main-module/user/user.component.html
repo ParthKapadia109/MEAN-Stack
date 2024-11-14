@@ -1,0 +1,162 @@
+<app-nav-bar></app-nav-bar>
+<app-side-bar></app-side-bar>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Users</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Home</a></li>
+                        <li class="breadcrumb-item active">User</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                <div class="alert-success alert" role="alert" *ngIf="message">
+                    <span>{{message}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">
+                                Manage Users
+                            </div>
+                            <div class="card-tools">
+                                <a routerLink="/admin/add-user" *ngIf="currentUserPermission.includes('add-user')">
+                                    <button type="button" class="btn btn-tool btn-primary" data-card-widget="collapse">
+                                        <i class="fas fa-user-plus"></i> Create User
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <!-- <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Status</th>
+                                        <th
+                                            *ngIf="currentUserPermission.includes('user-permission') || currentUserPermission.includes('edit-user') || currentUserPermission.includes('delete-user')">
+                                            Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="userData.length > 0">
+                                    <tr *ngFor="let user of userData; index as i">
+                                        <td>{{i + 1}}</td>
+                                        <td>
+                                            {{user.user_name}} <br />
+                                            <span class="slug">{{user.user_slug}}</span>
+                                        </td>
+                                        <td>{{user.email}}</td>
+                                        <td>{{user.role}}</td>
+                                        <td>{{user.user_status}}</td>
+                                        <td>
+                                            
+                                            <div>
+                                                <a [routerLink]="['/admin/user-permission', user.user_slug, user.role]" *ngIf="currentUserPermission.includes('user-permission')">
+                                                <button type="button" class="btn-icon btn btn-sm btn-info"><i class="fas fa-lock"></i></button> </a>
+                                                <a [routerLink]="['/admin/edit-user/', user.user_slug]"
+                                                    *ngIf="currentUserPermission.includes('edit-user')">
+                                                <button type="button" class="btn-icon btn btn-sm btn-warning"><i class="fas fa-edit"></i></button></a>
+                                                <button type="button" class="btn-icon btn btn-sm btn-danger" *ngIf="currentUserPermission.includes('delete-user')"
+                                                (click)="deleteUser(user.user_slug)"><i class="fas fa-trash"></i></button>
+                                            </div>  
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="userData.length == 0">
+                                    <tr>
+                                        <td colspan="6" class="text-center">
+                                            No recored found !
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table> -->
+                            <!-- <ngx-datatable [rows]="rows" [columns]="columns" class="material"> </ngx-datatable> -->
+                            <div class="col-lg-12" *ngIf="currentUserPermission.includes('view-user')">
+                                <input type="text"
+                                    style="padding:8px;margin:15px auto;width:30%;float:right;width: 200px;"
+                                    placeholder="Search" (keyup)="updateFilter($event)" />
+                                <ngx-datatable #table class='bootstrap table' [columnMode]="ColumnMode.force"
+                                    [headerHeight]="'auto'" [footerHeight]="'auto'" [rowHeight]="'auto'" [limit]="3"
+                                    [rows]='userData' [scrollbarH]="true">
+                                    <ngx-datatable-column [sortable]="true" name="Username" prop="user_name">
+                                        <ng-template let-row="row" ngx-datatable-cell-template>
+                                            {{row.user_name | titlecase}} <br />
+                                            <!-- <span class="badge bg-warning">{{row.user_slug}}</span> -->
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column [sortable]="true" name="Email" prop="email">
+                                        <ng-template let-row="row" ngx-datatable-cell-template>{{row.email}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column [sortable]="true" name="Role" prop="role">
+                                        <ng-template let-row="row" ngx-datatable-cell-template>{{row.role | titlecase}}
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column [sortable]="true" name="Status" prop="user_status">
+                                        <ng-template let-row="row" ngx-datatable-cell-template>
+                                            <!-- {{row.user_status ? 'Active' : 'Inactive' | titlecase}} -->
+                                            <!-- <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="customSwitch{{row._id}}"
+                                                    [checked]="checkedSwitch(row.user_status)"
+                                                    (change)="onChangeStatus(row._id, row.user_slug, row.user_status)">
+                                                <label class="custom-control-label" for="customSwitch{{row._id}}">
+                                                    <span _ngcontent-sbo-c96="" class="badge"
+                                                        [class]="row.user_status ? 'bg-success' : 'bg-danger'">
+                                                        {{row.user_status ? 'Active' : 'Inactive' | titlecase}}
+                                                    </span>
+                                                </label>
+                                            </div> -->
+                                            <h5><span _ngcontent-sbo-c96="" class="badge"
+                                                [class]="row.user_status ? 'bg-success' : 'bg-danger'" (click)="onChangeStatus(row._id, row.user_slug, row.user_status)">
+                                                {{row.user_status ? 'Active' : 'Inactive' | titlecase}}
+                                            </span></h5>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column [sortable]="false" name="Action">
+                                        <ng-template let-row="row" ngx-datatable-cell-template>
+                                            <div
+                                                *ngIf="currentUserPermission.includes('user-permission') || currentUserPermission.includes('edit-user') || currentUserPermission.includes('delete-user')">
+                                                <a [routerLink]="['/admin/user-permission', row.user_slug, row.role]"
+                                                    *ngIf="currentUserPermission.includes('user-permission') && row.role != 'user'">
+                                                    <button type="button" class="btn-icon btn btn-sm btn-info"><i
+                                                            class="fas fa-lock"></i></button> </a>
+                                                <a [routerLink]="['/admin/edit-user/', row.user_slug]"
+                                                    *ngIf="currentUserPermission.includes('edit-user')">
+                                                    <button type="button" class="btn-icon btn btn-sm btn-warning"><i
+                                                            class="fas fa-edit"></i></button></a>
+                                                <button type="button" class="btn-icon btn btn-sm btn-danger"
+                                                    *ngIf="currentUserPermission.includes('delete-user')"
+                                                    (click)="deleteUser(row.user_slug)"><i
+                                                        class="fas fa-trash"></i></button>
+                                            </div>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                </ngx-datatable>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<app-footer></app-footer>

@@ -1,0 +1,6 @@
+span.badge {
+    cursor: pointer;
+}
+a:hover {
+    text-decoration : none;
+}

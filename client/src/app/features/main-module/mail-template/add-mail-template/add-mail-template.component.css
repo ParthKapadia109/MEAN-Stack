@@ -1,0 +1,24 @@
+.invaild-feedback {
+    color : red;
+}
+
+.mail-key li {
+    padding: 8px 16px;
+    background-color: #f4f6f9;
+    border-radius: 4px;
+    margin: 0 0 8px 0;
+    font-size: 14px;
+}
+.mail-key li i {
+    margin-left: 8px;
+}
+.mail-key li.active i{
+    color: green;
+}
+.mail-key li.active {
+    background-color: #aee0b5 !important;
+}
+
+a:hover {
+    text-decoration : none;
+}

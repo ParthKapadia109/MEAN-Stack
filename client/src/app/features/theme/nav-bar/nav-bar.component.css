@@ -1,0 +1,37 @@
+.themeColor {
+    width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;
+}
+.themeColor {
+    position: relative;
+}
+.themeColor.active-color:before {
+    content: "\f058";
+    position: absolute;
+    font-weight: 900;
+    font-size: 14px;
+    font-family: "Font Awesome 5 Free";
+    right: 3px;
+    top: 0;
+}
+.control-sidebar{
+    display: inherit;
+}
+.control-sidebar.customize-toggle-open{
+    right: 0px !important;
+    transition: right .5s ease-in-out,display .5s ease-in-out;
+}
+.control-sidebar.customize-toggle-close{
+    right: -250px !important;
+    transition: right .5s ease-in-out,display .5s ease-in-out;
+}
+
+/* .control-sidebar.aside-none{
+    display: none !important;
+    right: -250px !important;
+    transition: right .3s ease-in-out,display .3s ease-in-out;
+}
+.control-sidebar-slide-open .control-sidebar.aside-none,
+.control-sidebar-slide-open .control-sidebar.aside-none::before {
+    right: -250px;
+    transition: right .3s ease-in-out,display .3s ease-in-out;
+} */

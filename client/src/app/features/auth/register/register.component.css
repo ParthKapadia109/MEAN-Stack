@@ -1,0 +1,19 @@
+.alert-error {
+    /* margin: -26px 0px 0px -19px; */
+    color: red;
+}
+
+.register-class {
+    min-height: 512.391px;
+    align-items: center;
+    background: #e9ecef;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+}
+
+a:hover {
+    text-decoration : none;
+}

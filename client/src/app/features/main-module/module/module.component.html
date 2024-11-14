@@ -1,0 +1,136 @@
+<app-nav-bar></app-nav-bar>
+<app-side-bar></app-side-bar>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Module Manage</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Home</a></li>
+                        <li class="breadcrumb-item active">Module Manage</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                <div class="alert-success alert" role="alert" *ngIf="message">
+                    <span>{{message}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div [class]="currentUserPermission.includes('add-module') ? 'col-md-8' : 'col-md-12'">
+                    <div class="card" *ngFor="let module of modulesData">
+                        <div class="card-header">
+                            <div class="card-title">{{module.title}}</div>
+                            <div class="card-tools" [style.display]="module.module_slug == 'user' || module.module_slug == 'cms' || module.module_slug == 'role' || module.module_slug == 'module' || module.module_slug == 'mail-template' ? 'none' : '' ">
+                                <button (click)="editModule(module.module_slug)" class="mr-2 btn btn-tool btn-warning"><span class="fa fa-edit"></span></button>
+                                <button class="btn btn-tool btn-danger" (click)="deleteModule(module.module_slug)"><span class="fa fa-trash"></span></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3" *ngFor="let sub_module of module.sub_module">
+                                    <!-- checkbox -->
+                                    <div class="form-group clearfix">
+                                        <div class="icheck-primary d-inline">
+                                            <input type="checkbox" id="{{sub_module._id}}"
+                                                value="{{sub_module.sub_module_slug}}">
+                                            <label for="{{sub_module._id}}">
+                                                {{sub_module.sub_module_title}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div [class]="currentUserPermission.includes('view-module') ? 'col-md-4' : 'col-md-12'">
+                    <div class="card">
+                        <div class="card-header">
+                            Module {{title}}
+                        </div>
+                        <div class="card-body">
+                            <form [formGroup]="moduleForm" (ngSubmit)="onSubmit()">
+                                <div class="form-group">
+                                    <label for="module-title">Module Title</label>
+                                    <input type="text" id="module-title" class="form-control" placeholder="Module Title"
+                                        formControlName="title" [ngClass]="{'is-invaild' : submit && f.title.errors}" minlength="3">
+                                    <div class="alert alert-error" *ngIf="submit && errors">
+                                        {{errors.title}}
+                                    </div>
+                                    <div class="alert alert-error" *ngIf="submit && f.title.errors">
+                                        <div *ngIf="submit && f.title.errors?.minlength">
+                                            Title is Minimun 3 charcter!
+                                        </div>
+                                        <div *ngIf="submit && f.title.errors.required">
+                                            Module Title is required.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Status</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status" id="exampleRadios1"
+                                            [value]=true formControlName="status">
+                                        <label class="form-check-label" for="exampleRadios1">
+                                            Active
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status" id="exampleRadios2"
+                                            [value]=false formControlName="status">
+                                        <label class="form-check-label" for="exampleRadios2">
+                                            Deactivate
+                                        </label>
+                                    </div>
+                                    <div class="alert alert-error" *ngIf="submit && f.status.errors">
+                                        <div *ngIf="submit && f.status.errors.required">
+                                            Module status is required.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" formArrayName="subModule" >
+                                    <label for="sub-module">Sub Module</label>
+                                    <div class="mt-2 d-flex" *ngFor="let sub of subModule().controls;index as i"
+                                        [formGroupName]="i">
+                                        <div class="d-inline-flex w-100 mb-2">
+                                            <input type="text" id="sub-module" class="form-control mr-2"
+                                            placeholder="Sub Module Title" formControlName="sub_module" > 
+                                            <button type="button" class="btn btn-danger"
+                                            (click)="removeSubModule(i)"><i
+                                                class="text-center fa fa-times"></i></button>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <button type="button" class="btn btn-pdg btn-success"
+                                            (click)="addSubModule()"><i class="text-center fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+                                <div class="alert alert-error" *ngIf="submit && errors">
+                                    {{errors.sub_module_title}}
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-success m-2">{{title}}</button>
+                                    <button type="button" class="btn btn-danger m-2" (click)="resetForm()" [style.display]="title=='Edit' ? '' : 'none'">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<app-footer></app-footer>

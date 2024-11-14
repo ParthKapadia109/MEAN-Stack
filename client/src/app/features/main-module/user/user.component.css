@@ -1,0 +1,26 @@
+.btn-icon {
+    margin: 5px;
+}
+
+.slug {
+    font-size: 12px;
+}
+
+.card-title {
+    margin: 0px;
+}
+
+.empty-row {
+    text-align: center;
+}
+
+span.badge:hover {
+    cursor: pointer;
+}
+
+.datatable-body .datatable-body-row>div{
+    align-items: center;
+}
+a:hover {
+    text-decoration: none; 
+} 

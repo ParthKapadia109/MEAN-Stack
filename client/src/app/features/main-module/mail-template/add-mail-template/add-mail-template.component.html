@@ -1,0 +1,137 @@
+<app-nav-bar></app-nav-bar>
+<app-side-bar></app-side-bar>
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Mail Template</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a routerLink="/admin/dashboard">Home</a></li>
+                        <li class="breadcrumb-item active"><a routerLink="/admin/mail-template">Mail Template</a></li>
+                        <li class="breadcrumb-item active">Add Mail Template</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-success" *ngIf="message">
+                        <span>{{message}}</span>
+                    </div>
+                    <div class="alert alert-danger" *ngIf="error">
+                        <span>{{error}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title mb-0">
+                                Create a new Mail Template
+                            </div>
+                        </div>
+                        <form [formGroup]="addMail" (ngSubmit)="onSubmit()">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class=form-group>
+                                            <label>Template Name</label>
+                                            <input class="form-control" name="template_name" minlength="5" maxlength="50" placeholder="Template Name" formControlName="template_name" [ngClass]="{ 'is-invalid': submit && f.template_name.errors }"/>
+                                            <div *ngIf="submit && f.template_name.errors">
+                                                <div *ngIf="submit && f.template_name.errors.required">
+                                                    <span class="invaild-feedback">The template name field is required.</span>
+                                                </div>
+                                                <div *ngIf="submit && f.template_name.errors?.minlength">
+                                                    <span class="invaild-feedback">The template name must be at least 5 characters.</span>
+                                                </div>
+                                                <div *ngIf="submit && f.template_name.errors?.maxlength">
+                                                    <span class="invaild-feedback">The template name must be at least 50 characters.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class=form-group>
+                                            <label>Subject</label>
+                                            <input class="form-control" name="subject" minlength="5" maxlength="100" placeholder="Subject" formControlName="subject" [ngClass]="{ 'is-invalid': submit && f.subject.errors }" />
+                                            <div *ngIf="submit && f.subject.errors">
+                                                <div *ngIf="submit && f.subject.errors.required">
+                                                    <span class="invaild-feedback">The subject field is required.</span>
+                                                </div>
+                                                <div *ngIf="submit && f.subject.errors?.minlength">
+                                                    <span class="invaild-feedback">The subject must be at least 5 characters.</span>
+                                                </div>
+                                                <div *ngIf="submit && f.subject.errors?.maxlength">
+                                                    <span class="invaild-feedback">The subject must be at least 100 characters.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <ckeditor formControlName="description" (change)="onChange($event)" ></ckeditor>
+                                            <div *ngIf="submit && f.description.errors">
+                                                <div *ngIf="submit && f.description.errors.required">
+                                                    <span class="invaild-feedback">The description field is required.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mail-key">
+                                            <label>Mail key list</label>
+                                            <ul class="list-unstyled">
+                                                <li *ngFor="let key of defaultKey" [class.active]="key.active">
+                                                    {{key.name}}
+                                                    <i class="fas fa-copy" (click)="copyContent(key.value)"></i>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Status</label>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="customSwitchesStatus"
+                                                name="status" formControlName="status" >
+                                                <label class="custom-control-label" for="customSwitchesStatus">Active/Inactive</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <button type="button" class="btn p-1 m-2" [class]="nameFind ? 'bg-success shadow' : 'bg-danger'" (click)="addName()">Name</button>
+                                            <button type="button" class="btn p-1 m-2" [class]="emailFind ? 'bg-success shadow' : 'bg-danger'" (click)="addEmailAddress()">Email</button>
+                                            <button type="button" class="btn p-1 m-2" [class]="subjectFind ? 'bg-success shadow' : 'bg-danger'" (click)="addSubject()">Subject</button>
+                                            <button type="button" class="btn p-1 m-2" [class]="resetLink ? 'bg-success shadow' : 'bg-danger'" (click)="addResetLink()">Reset Link</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-success"> Save </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+<app-footer></app-footer>

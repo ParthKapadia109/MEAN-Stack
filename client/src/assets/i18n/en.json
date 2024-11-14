@@ -1,0 +1,15 @@
+{
+  "HOME": {
+    "TITLE": "Hello Angular with ngx-translate!",
+    "SELECT": "Change language",
+    "FOOTER": "Role Management module",
+    "SIGN_OUT": "Sign Out",
+    "ROLE-MODULE": "Role Module"
+  },
+  "DASHBOARD": "Dashboard",
+  "USER": "User",
+  "ROLE": "Role",
+  "MODULE": "Module",
+  "SETTING": "Setting",
+  "CMS": "CMS"
+}

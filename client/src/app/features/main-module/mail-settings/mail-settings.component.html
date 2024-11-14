@@ -1,0 +1,97 @@
+<section>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="message">
+                <strong>{{message}}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="error">
+                <strong>{{error}}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <form [formGroup]="mailConfigForm" (ngSubmit)="onUpdate()">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="serviceName"> Service Name </label>
+                            <input type="text" id="serviceName" class="form-control" placeholder="Service Name (Eg : gmail)" formControlName="service" [ngClass]="{ 'is-invalid': submit && f.service.errors }">
+                            <div *ngIf="submit && f.service.errors">
+                                <div *ngIf="submit && f.service.errors.required">
+                                    <span class="invaild-feedback">The service field is required.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="host"> Host </label>
+                            <input type="text" id="host" class="form-control" placeholder="Host" formControlName="host" >
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="port"> Port </label>
+                            <input type="text" id="port" class="form-control" placeholder="Port" formControlName="port" [ngClass]="{ 'is-invalid' : submit && f.port.errors }">
+                            <div *ngIf="submit && f.port.errors">
+                                <div *ngIf="submit && f.port.errors.required">
+                                    <span class="invaild-feedback">The port field is required.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="secure"> Secure </label>
+                            <!-- <input type="text" id="secure" class="form-control" placeholder="Secure"> -->
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="secureSwitch" formControlName="secure" [ngClass]="{ 'is-invalid' : submit && f.secure.errors }">
+                                <label class="custom-control-label" for="secureSwitch">True/False</label>
+                            </div>
+                            <div *ngIf="submit && f.secure.errors">
+                                <div *ngIf="submit && f.secure.errors.required">
+                                    <span class="invaild-feedback">The secure field is required.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label> Email </label>
+                    <input type="email" id="" class="form-control" placeholder="Email" formControlName="email" [ngClass]="{ 'is-invalid' : submit && f.email.errors }">
+                    <div *ngIf="submit && f.email.errors">
+                        <div *ngIf="submit && f.email.errors.required">
+                            <span class="invaild-feedback">The email field is required.</span>
+                        </div>
+                        <div *ngIf="submit && f.email.errors.pattern">
+                            <span class="invaild-feedback">The email is invalid.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label> Password </label>
+                    <input type="password" id="" class="form-control" placeholder="Password" formControlName="password" [ngClass]="{ 'is-invalid' : submit && f.password.errors }">
+                    <div *ngIf="submit && f.password.errors">
+                        <div *ngIf="submit && f.password.errors.required">
+                            <span class="invaild-feedback">The password field is required.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group justify-content-end d-flex">
+                    <button class="btn btn-primary m-2" type="submit">Update</button>
+                    <button class="btn btn-success m-2" type="button" (click)="testMailConfiguration()">Test</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

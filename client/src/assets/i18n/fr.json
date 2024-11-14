@@ -1,0 +1,15 @@
+{
+  "HOME": {
+    "TITLE": "Bonjour Angular avec ngx-translate !",
+    "SELECT": "Changer la langue",
+    "FOOTER": "Module de gestion des rôles",
+    "SIGN_OUT": "Déconnexion",
+    "ROLE-MODULE": "Module de rôle"
+  },
+  "DASHBOARD": "Tableau de bord",
+  "USER": "Utilisateur",
+  "ROLE": "Rôle",
+  "MODULE": "Module",
+  "SETTING": "Réglage",
+  "CMS": "CMS"
+}

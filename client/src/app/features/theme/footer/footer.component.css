@@ -1,0 +1,25 @@
+a:hover {
+    color: #0056b3;
+    text-decoration: none;
+}
+
+/* .themeColor {
+    width: 40px; height: 20px; border-radius: 25px; margin-right: 10px; margin-bottom: 10px; opacity: 0.8; cursor: pointer;
+}
+.themeColor {
+    position: relative;
+}
+.themeColor.active-color:before {
+    content: "\f058";
+    position: absolute;
+    font-weight: 900;
+    font-size: 14px;
+    font-family: "Font Awesome 5 Free";
+    right: 3px;
+    top: 0;
+}
+
+.aside-none {
+    right: 0;
+    transition: right .3s ease-in-out,display .3s ease-in-out;
+} */

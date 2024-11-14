@@ -1,0 +1,120 @@
+<div class="main-body-wrapper">
+    <app-front-navbar></app-front-navbar>
+    <main id="main">
+        <section class="breadcrumbs">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>Register</h2>
+                </div>
+
+            </div>
+        </section>
+        <section class="portfolio-details">
+            <div class="container">
+              <div class="col-lg-6 my-5 mx-auto">
+                <div class="card">
+                    <div class="card-body register-card-body">
+                      <p class="login-box-msg">Register a new membership</p>
+                      
+                      <div class="alert alert-success" *ngIf="message">
+                        <span>{{message}}</span>
+                      </div>
+            
+                      <form [formGroup]="register_form" (ngSubmit)="onSubmit()">
+                        <div class="form-group">
+                          <div class="input-group">
+                            <input type="text" appOnlyLetter class="form-control" placeholder="User Name" minlength="4" maxlength="30" formControlName="user_name" [ngClass]="{ 'is-invalid': submitted && f.user_name.errors }">
+                            <div class="input-group-append">
+                              <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="alert-error alert" *ngIf="submitted && f.user_name.errors">
+                              <div *ngIf="submitted && f.user_name.errors.required">
+                                  User name is required 
+                              </div>
+                              <div *ngIf="submitted && f.user_name.errors?.minlength">
+                                The user name must be at least minimum 4 & maximum 30 characters.
+                              </div>
+                          </div>
+                          <div class="alert-error alert" *ngIf="submitted && userNameError">
+                              {{userNameError}}
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                            <div class="input-group-append">
+                              <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="alert-error alert" *ngIf="submitted && f.email.errors">
+                              <div *ngIf="submitted && f.email.errors.required">
+                                  Email is required 
+                              </div>
+                              <div *ngIf="submitted && f.email.errors.pattern">
+                                <span>The email is invalid</span>
+                              </div>
+                          </div>
+                          <div class="alert-error alert" *ngIf="submitted && emailError">
+                              {{emailError}}
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="input-group">
+                            <input type="password" class="form-control" placeholder="Password" minlength="6" maxlength="12" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors || passwordError }">
+                            <div class="input-group-append">
+                              <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="alert-error alert" *ngIf="submitted && f.password.errors">
+                              <div *ngIf="submitted && f.password.errors.required">
+                                  Password is required 
+                              </div>
+                              <div *ngIf="submitted && f.password.errors?.minlength">
+                                The password must be at least minimum 6 & maximum 12 characters.
+                              </div>
+                          </div>
+                          
+                        </div>
+                        <div class="form-group">
+                          <div class="input-group">
+                            <input type="password" class="form-control" (change)="pwdMatch()" placeholder="Confirm Password" formControlName="confirm_password" [ngClass]="{ 'is-invalid': submitted && f.confirm_password.errors || passwordError }">
+                            <div class="input-group-append">
+                              <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="alert-error alert" *ngIf="submitted && f.confirm_password.errors">
+                              <div *ngIf="submitted && f.confirm_password.errors.required">
+                                  Confirm password is required 
+                              </div>
+                            </div>
+                            <div class="alert-error alert" *ngIf="submitted && passwordError || passwordError">
+                              {{passwordError}}
+                            </div>
+                        </div>
+                        <div class="row">
+                          <!-- /.col -->
+                          <div class="col-12 text-right">
+                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                          </div>
+                          <!-- /.col -->
+                        </div>
+                      </form>
+                    </div>
+                    <!-- /.form-box -->
+                </div>
+              </div>
+            </div>
+        </section>
+    </main>
+    <app-front-footer></app-front-footer>
+</div>
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>

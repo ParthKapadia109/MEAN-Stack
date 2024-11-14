@@ -1,0 +1,27 @@
+.input-field {
+    width: 80%;
+}
+
+.remove-icon {
+    margin-top: -35px;
+}
+
+.alert-error  {
+    color: red;
+    /* margin : -13px 0px 0px -15px; */
+}
+
+.card-title {
+    margin: 0px;
+}
+.btn-pdg {
+    padding:5px 10px;
+}
+
+.alert-error {
+    padding: 0;
+}
+
+a:hover {
+    text-decoration : none;
+}

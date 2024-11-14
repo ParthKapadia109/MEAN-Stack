@@ -1,0 +1,565 @@
+<nav [ngClass]="header">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" (click)="toggleUpdate()" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <!-- <li class="nav-item d-none d-sm-inline-block">
+            <a href="index3.html" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="#" class="nav-link">Contact</a>
+        </li> -->
+    </ul>
+
+    <!-- SEARCH FORM -->
+    <!-- <form class="form-inline ml-3">
+        <div class="input-group input-group-sm">
+            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+            <div class="input-group-append">
+                <button class="btn btn-navbar" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form> -->
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+        <!-- Messages Dropdown Menu -->
+        <!-- <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+                <i class="far fa-comments"></i>
+                <span class="badge badge-danger navbar-badge">3</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <a href="#" class="dropdown-item">
+                    
+                    <div class="media">
+                        <img src="assets/theme/admin/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                        <div class="media-body">
+                            <h3 class="dropdown-item-title">
+                                Brad Diesel
+                                <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                            </h3>
+                            <p class="text-sm">Call me whenever you can...</p>
+                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                        </div>
+                    </div>
+                    
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                  
+                    <div class="media">
+                        <img src="assets/theme/admin/dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                        <div class="media-body">
+                            <h3 class="dropdown-item-title">
+                                John Pierce
+                                <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
+                            </h3>
+                            <p class="text-sm">I got your message bro</p>
+                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                        </div>
+                    </div>
+                    
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                    
+                    <div class="media">
+                        <img src="assets/theme/admin/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                        <div class="media-body">
+                            <h3 class="dropdown-item-title">
+                                Nora Silvester
+                                <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
+                            </h3>
+                            <p class="text-sm">The subject goes here</p>
+                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                        </div>
+                    </div>
+                    
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+            </div>
+        </li> -->
+        <!-- Notifications Dropdown Menu -->
+        <!-- <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+                <i class="far fa-bell"></i>
+                <span class="badge badge-warning navbar-badge">15</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <span class="dropdown-item dropdown-header">15 Notifications</span>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                    <i class="fas fa-envelope mr-2"></i> 4 new messages
+                    <span class="float-right text-muted text-sm">3 mins</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                    <i class="fas fa-users mr-2"></i> 8 friend requests
+                    <span class="float-right text-muted text-sm">12 hours</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                    <i class="fas fa-file mr-2"></i> 3 new reports
+                    <span class="float-right text-muted text-sm">2 days</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+            </div>
+        </li> -->
+        <!-- <select class="selectpicker">
+            <option>Mustard</option>
+            <option>Ketchup</option>
+            <option>Barbecue</option>
+          </select> -->
+        <!-- <select class="selectpicker" data-width="fit">
+            <option data-content='<span class="flag-icon flag-icon-us"></span> English'>English</option>
+            <option  data-content='<span class="flag-icon flag-icon-mx"></span> Español'>Español</option>
+        </select> -->
+        <!-- <select class="custom-select mr-2 bg-transparent border-0 shadow-none">
+            <option data-icon="fas fa-user">English</option>
+            <option>Gujarati</option>
+            <option>Hindi</option>
+        </select> -->
+        <!-- <select class="custom-select mr-2 bg-transparent border-0 shadow-none" #langSelect  (change)="translate.use(langSelect.value)"> -->
+        <select class="custom-select mr-2 bg-transparent border-0 shadow-none" #langSelect  (change)="changeLanguage(langSelect.value)">
+            <option *ngFor="let lang of translate.getLangs()" [value]="lang"
+                [selected]="lang === translate.currentLang">{{ lang }}</option>
+        </select>
+        <li class="nav-item">
+            <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button" (click)="customizeToggle()">
+                <i class="fas fa-th-large"></i>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<aside class="control-sidebar control-sidebar-dark" [class.customize-toggle-open]="customie_toggle_open" [class.customize-toggle-close]="customie_toggle_close">
+    <div class="p-3 control-sidebar-content os-host os-theme-light os-host-resize-disabled os-host-scrollbar-horizontal-hidden os-host-overflow os-host-overflow-y os-host-transition"
+        style="height: 400px;">
+        <div class="os-resize-observer-host observed">
+            <div class="os-resize-observer" style="left: 0px; right: auto;"></div>
+        </div>
+        <div class="os-size-auto-observer observed" style="height: calc(100% + 1px); float: left;">
+            <div class="os-resize-observer"></div>
+        </div>
+        <div class="os-content-glue" style="margin: -16px; width: 249px; height: 399px;"></div>
+        <div class="os-padding">
+            <div class="os-viewport os-viewport-native-scrollbars-invisible" style="overflow-y: scroll;">
+                <div class="os-content" style="padding: 16px; height: 100%; width: 100%;">
+                    <h5>Customize AdminLTE</h5>
+                    <hr class="mb-2">
+                    <!-- <div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>No Navbar border</span></div>
+                    <div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Body small text</span></div>
+                    <div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Navbar small text</span></div>
+                    <div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Sidebar nav small text</span>
+                    </div>
+                    <div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Footer small text</span></div>
+                    <div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Sidebar nav flat style</span>
+                    </div>
+                    <div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Sidebar nav legacy
+                            style</span></div>
+                    <div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Sidebar nav compact</span>
+                    </div>
+                    <div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Sidebar nav child
+                            indent</span></div>
+                    <div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Main Sidebar disable
+                            hover/focus auto expand</span></div>
+                    <div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>Brand small text</span></div> -->
+                    <h6>Navbar Variants</h6>
+                    <div class="d-flex">
+                        <div class="d-flex flex-wrap mb-3">
+                            <div class="bg-primary elevation-2 themeColor"
+                                [class.active-color]="navbar_color == 'navbar-primary'"
+                                (click)="navColorChange('navbar-primary')">
+                            </div>
+                            <div class="bg-secondary elevation-2 themeColor"
+                                [class.active-color]="navbar_color == 'navbar-secondary'"
+                                (click)="navColorChange('navbar-secondary')">
+                            </div>
+                            <!-- <div class="bg-info elevation-2 themeColor"
+                                [class.active-color]="navbar_color == 'navbar-info'"
+                                (click)="navColorChange('navbar-info')">
+                            </div> -->
+                            <div class="bg-success elevation-2 themeColor"
+                                [class.active-color]="navbar_color == 'navbar-success'"
+                                (click)="navColorChange('navbar-success')">
+                            </div>
+                            <div class="bg-danger elevation-2 themeColor"
+                                [class.active-color]="navbar_color == 'navbar-danger'"
+                                (click)="navColorChange('navbar-danger')">
+                            </div>
+                            <div class="bg-indigo elevation-2 themeColor"
+                                [class.active-color]="navbar_color == 'navbar-indigo'"
+                                (click)="navColorChange('navbar-indigo')">
+                            </div>
+                            <div class="bg-purple elevation-2 themeColor"
+                                [class.active-color]="navbar_color == 'navbar-purple'"
+                                (click)="navColorChange('navbar-purple')">
+                            </div>
+                            <div class="bg-pink elevation-2 themeColor"
+                                [class.active-color]="navbar_color == 'navbar-pink'"
+                                (click)="navColorChange('navbar-pink')">
+                            </div>
+                            <div class="bg-navy elevation-2 themeColor"
+                                [class.active-color]="navbar_color == 'navbar-navy'"
+                                (click)="navColorChange('navbar-navy')">
+                            </div>
+                            <div class="bg-lightblue elevation-2 themeColor"
+                                [class.active-color]="navbar_color == 'navbar-lightblue'"
+                                (click)="navColorChange('navbar-lightblue')">
+                            </div>
+                            <div class="bg-teal elevation-2 themeColor"
+                                [class.active-color]="navbar_color == 'navbar-teal'"
+                                (click)="navColorChange('navbar-teal')">
+                            </div>
+                            <div class="bg-cyan elevation-2 themeColor"
+                                [class.active-color]="navbar_color == 'navbar-cyan'"
+                                (click)="navColorChange('navbar-cyan')">
+                            </div>
+                            <div class="bg-dark elevation-2 themeColor"
+                                [class.active-color]="navbar_color == 'navbar-dark'"
+                                (click)="navColorChange('navbar-dark')">
+                            </div>
+                            <div class="bg-gray-dark elevation-2 themeColor"
+                                [class.active-color]="navbar_color == 'navbar-gray-dark'"
+                                (click)="navColorChange('navbar-gray-dark')">
+                            </div>
+                            <div class="bg-gray elevation-2 themeColor"
+                                [class.active-color]="navbar_color == 'navbar-gray'"
+                                (click)="navColorChange('navbar-gray')">
+                            </div>
+                            <div class="bg-light elevation-2 themeColor"
+                                [class.active-color]="navbar_color == 'navbar-light'"
+                                (click)="navColorChange('navbar-light')">
+                            </div>
+                            <div class="bg-warning elevation-2 themeColor"
+                                [class.active-color]="navbar_color == 'navbar-warning'"
+                                (click)="navColorChange('navbar-warning')">
+                            </div>
+                            <div class="bg-white elevation-2 themeColor"
+                                [class.active-color]="navbar_color == 'navbar-white'"
+                                (click)="navColorChange('navbar-white')">
+                            </div>
+                            <div class="bg-orange elevation-2 themeColor"
+                                [class.active-color]="navbar_color == 'navbar-orange'"
+                                (click)="navColorChange('navbar-orange')">
+                            </div>
+                        </div>
+                    </div>
+                    <h6>Accent Color Variants</h6>
+                    <div class="d-flex"></div>
+                    <div class="d-flex flex-wrap mb-3">
+                        <div class="bg-primary elevation-2 themeColor"
+                            [class.active-color]="accent_color == 'text-primary'"
+                            (click)="footerColorChange('text-primary')">
+                        </div>
+                        <div class="bg-warning elevation-2 themeColor"
+                            [class.active-color]="accent_color == 'text-warning'"
+                            (click)="footerColorChange('text-warning')">
+                        </div>
+                        <div class="bg-info elevation-2 themeColor" [class.active-color]="accent_color == 'text-info'"
+                            (click)="footerColorChange('text-info')">
+                        </div>
+                        <div class="bg-danger elevation-2 themeColor"
+                            [class.active-color]="accent_color == 'text-danger'"
+                            (click)="footerColorChange('text-danger')">
+                        </div>
+                        <div class="bg-success elevation-2 themeColor"
+                            [class.active-color]="accent_color == 'text-success'"
+                            (click)="footerColorChange('text-success')">
+                        </div>
+                        <div class="bg-indigo elevation-2 themeColor"
+                            [class.active-color]="accent_color == 'text-indigo'"
+                            (click)="footerColorChange('text-indigo')">
+                        </div>
+                        <div class="bg-lightblue elevation-2 themeColor"
+                            [class.active-color]="accent_color == 'text-lightblue'"
+                            (click)="footerColorChange('text-lightblue')">
+                        </div>
+                        <div class="bg-navy elevation-2 themeColor" [class.active-color]="accent_color == 'text-navy'"
+                            (click)="footerColorChange('text-navy')">
+                        </div>
+                        <div class="bg-purple elevation-2 themeColor"
+                            [class.active-color]="accent_color == 'text-purple'"
+                            (click)="footerColorChange('text-purple')">
+                        </div>
+                        <div class="bg-fuchsia elevation-2 themeColor"
+                            [class.active-color]="accent_color == 'text-fuchsia'"
+                            (click)="footerColorChange('text-fuchsia')">
+                        </div>
+                        <div class="bg-pink elevation-2 themeColor" [class.active-color]="accent_color == 'text-pink'"
+                            (click)="footerColorChange('text-pink')">
+                        </div>
+                        <div class="bg-maroon elevation-2 themeColor"
+                            [class.active-color]="accent_color == 'text-maroon'"
+                            (click)="footerColorChange('text-maroon')">
+                        </div>
+                        <div class="bg-orange elevation-2 themeColor"
+                            [class.active-color]="accent_color == 'text-orange'"
+                            (click)="footerColorChange('text-orange')">
+                        </div>
+                        <div class="bg-lime elevation-2 themeColor" [class.active-color]="accent_color == 'text-lime'"
+                            (click)="footerColorChange('text-lime')">
+                        </div>
+                        <div class="bg-teal elevation-2 themeColor" [class.active-color]="accent_color == 'text-teal'"
+                            (click)="footerColorChange('text-teal')">
+                        </div>
+                        <div class="bg-olive elevation-2 themeColor" [class.active-color]="accent_color == 'text-olive'"
+                            (click)="footerColorChange('text-olive')">
+                        </div>
+                    </div>
+                    <h6>Dark Sidebar Variants</h6>
+                    <div class="d-flex"></div>
+                    <div class="d-flex flex-wrap mb-3">
+                        <div class="bg-primary elevation-2 themeColor"
+                            [class.active-color]="sidebar_color == 'dark-primary'"
+                            (click)="sideBarColorChange('dark-primary')">
+                        </div>
+                        <div class="bg-warning elevation-2 themeColor"
+                            [class.active-color]="sidebar_color == 'dark-warning'"
+                            (click)="sideBarColorChange('dark-warning')">
+                        </div>
+                        <div class="bg-info elevation-2 themeColor" [class.active-color]="sidebar_color == 'dark-info'"
+                            (click)="sideBarColorChange('dark-info')">
+                        </div>
+                        <div class="bg-danger elevation-2 themeColor"
+                            [class.active-color]="sidebar_color == 'dark-danger'"
+                            (click)="sideBarColorChange('dark-danger')">
+                        </div>
+                        <div class="bg-success elevation-2 themeColor"
+                            [class.active-color]="sidebar_color == 'dark-success'"
+                            (click)="sideBarColorChange('dark-success')">
+                        </div>
+                        <div class="bg-indigo elevation-2 themeColor"
+                            [class.active-color]="sidebar_color == 'dark-indigo'"
+                            (click)="sideBarColorChange('dark-indigo')">
+                        </div>
+                        <div class="bg-lightblue elevation-2 themeColor"
+                            [class.active-color]="sidebar_color == 'dark-lightblue'"
+                            (click)="sideBarColorChange('dark-lightblue')">
+                        </div>
+                        <div class="bg-navy elevation-2 themeColor" [class.active-color]="sidebar_color == 'dark-navy'"
+                            (click)="sideBarColorChange('dark-navy')">
+                        </div>
+                        <div class="bg-purple elevation-2 themeColor"
+                            [class.active-color]="sidebar_color == 'dark-purple'"
+                            (click)="sideBarColorChange('dark-purple')">
+                        </div>
+                        <div class="bg-fuchsia elevation-2 themeColor"
+                            [class.active-color]="sidebar_color == 'dark-fuchsia'"
+                            (click)="sideBarColorChange('dark-fuchsia')">
+                        </div>
+                        <div class="bg-pink elevation-2 themeColor" [class.active-color]="sidebar_color == 'dark-pink'"
+                            (click)="sideBarColorChange('dark-pink')">
+                        </div>
+                        <div class="bg-maroon elevation-2 themeColor"
+                            [class.active-color]="sidebar_color == 'dark-maroon'"
+                            (click)="sideBarColorChange('dark-maroon')">
+                        </div>
+                        <div class="bg-orange elevation-2 themeColor"
+                            [class.active-color]="sidebar_color == 'dark-orange'"
+                            (click)="sideBarColorChange('dark-orange')">
+                        </div>
+                        <div class="bg-lime elevation-2 themeColor" [class.active-color]="sidebar_color == 'dark-lime'"
+                            (click)="sideBarColorChange('dark-lime')">
+                        </div>
+                        <div class="bg-teal elevation-2 themeColor" [class.active-color]="sidebar_color == 'dark-teal'"
+                            (click)="sideBarColorChange('dark-teal')">
+                        </div>
+                        <div class="bg-olive elevation-2 themeColor"
+                            [class.active-color]="sidebar_color == 'dark-olive'"
+                            (click)="sideBarColorChange('dark-olive')">
+                        </div>
+                    </div>
+                    <h6>Light Sidebar Variants</h6>
+                    <div class="d-flex"></div>
+                    <div class="d-flex flex-wrap mb-3">
+                        <div class="bg-primary elevation-2 themeColor"
+                            [class.active-color]="sidebar_color == 'light-primary'"
+                            (click)="sideBarColorChange('light-primary')">
+                        </div>
+                        <div class="bg-warning elevation-2 themeColor"
+                            [class.active-color]="sidebar_color == 'light-warning'"
+                            (click)="sideBarColorChange('light-warning')">
+                        </div>
+                        <div class="bg-info elevation-2 themeColor" [class.active-color]="sidebar_color == 'light-info'"
+                            (click)="sideBarColorChange('light-info')">
+                        </div>
+                        <div class="bg-danger elevation-2 themeColor"
+                            [class.active-color]="sidebar_color == 'light-danger'"
+                            (click)="sideBarColorChange('light-danger')">
+                        </div>
+                        <div class="bg-success elevation-2 themeColor"
+                            [class.active-color]="sidebar_color == 'light-success'"
+                            (click)="sideBarColorChange('light-success')">
+                        </div>
+                        <div class="bg-indigo elevation-2 themeColor"
+                            [class.active-color]="sidebar_color == 'light-indigo'"
+                            (click)="sideBarColorChange('light-indigo')">
+                        </div>
+                        <div class="bg-lightblue elevation-2 themeColor"
+                            [class.active-color]="sidebar_color == 'light-lightblue'"
+                            (click)="sideBarColorChange('light-lightblue')">
+                        </div>
+                        <div class="bg-navy elevation-2 themeColor" [class.active-color]="sidebar_color == 'light-navy'"
+                            (click)="sideBarColorChange('light-navy')">
+                        </div>
+                        <div class="bg-purple elevation-2 themeColor"
+                            [class.active-color]="sidebar_color == 'light-purple'"
+                            (click)="sideBarColorChange('light-purple')">
+                        </div>
+                        <div class="bg-fuchsia elevation-2 themeColor"
+                            [class.active-color]="sidebar_color == 'light-fuchsia'"
+                            (click)="sideBarColorChange('light-fuchsia')">
+                        </div>
+                        <div class="bg-pink elevation-2 themeColor" [class.active-color]="sidebar_color == 'light-pink'"
+                            (click)="sideBarColorChange('light-pink')">
+                        </div>
+                        <div class="bg-maroon elevation-2 themeColor"
+                            [class.active-color]="sidebar_color == 'light-maroon'"
+                            (click)="sideBarColorChange('light-maroon')">
+                        </div>
+                        <div class="bg-orange elevation-2 themeColor"
+                            [class.active-color]="sidebar_color == 'light-orange'"
+                            (click)="sideBarColorChange('light-orange')">
+                        </div>
+                        <div class="bg-lime elevation-2 themeColor" [class.active-color]="sidebar_color == 'light-lime'"
+                            (click)="sideBarColorChange('light-lime')">
+                        </div>
+                        <div class="bg-teal elevation-2 themeColor" [class.active-color]="sidebar_color == 'light-teal'"
+                            (click)="sideBarColorChange('light-teal')">
+                        </div>
+                        <div class="bg-olive elevation-2 themeColor"
+                            [class.active-color]="sidebar_color == 'light-olive'"
+                            (click)="sideBarColorChange('light-olive')">
+                        </div>
+                    </div>
+                    <h6>Brand Logo Variants</h6>
+                    <div class="d-flex"></div>
+                    <!-- <div class="d-flex flex-wrap mb-3">
+                        <div class="bg-primary elevation-2 themeColor" [class.active-color]="brand_logo_color == 'navbar-primary'" (click)="logoColorChange('navbar-primary')">
+                        </div>
+                        <div class="bg-warning elevation-2 themeColor" [class.active-color]="brand_logo_color == 'navbar-warning'" (click)="logoColorChange('navbar-warning')">
+                        </div>
+                        <div class="bg-info elevation-2 themeColor" [class.active-color]="brand_logo_color == 'navbar-info'" (click)="logoColorChange('navbar-info')">
+                        </div>
+                        <div class="bg-danger elevation-2 themeColor" [class.active-color]="brand_logo_color == 'navbar-danger'" (click)="logoColorChange('navbar-danger')">
+                        </div>
+                        <div class="bg-success elevation-2 themeColor" [class.active-color]="brand_logo_color == 'navbar-success'" (click)="logoColorChange('navbar-success')">
+                        </div>
+                        <div class="bg-indigo elevation-2 themeColor" [class.active-color]="brand_logo_color == 'navbar-indigo'" (click)="logoColorChange('navbar-indigo')">
+                        </div>
+                        <div class="bg-lightblue elevation-2 themeColor" [class.active-color]="brand_logo_color == 'navbar-lightblue'" (click)="logoColorChange('navbar-lightblue')">
+                        </div>
+                        <div class="bg-navy elevation-2 themeColor" [class.active-color]="brand_logo_color == 'navbar-navy'" (click)="logoColorChange('navbar-navy')">
+                        </div>
+                        <div class="bg-purple elevation-2 themeColor" [class.active-color]="brand_logo_color == 'navbar-purple'" (click)="logoColorChange('navbar-purple')">
+                        </div>
+                        <div class="bg-fuchsia elevation-2 themeColor" [class.active-color]="brand_logo_color == 'navbar-fuchsia'" (click)="logoColorChange('navbar-fuchsia')">
+                        </div>
+                        <div class="bg-pink elevation-2 themeColor" [class.active-color]="brand_logo_color == 'navbar-pink'" (click)="logoColorChange('navbar-pink')">
+                        </div>
+                        <div class="bg-maroon elevation-2 themeColor" [class.active-color]="brand_logo_color == 'navbar-maroon'" (click)="logoColorChange('navbar-maroon')">
+                        </div>
+                        <div class="bg-orange elevation-2 themeColor" [class.active-color]="brand_logo_color == 'navbar-orange'" (click)="logoColorChange('navbar-orange')">
+                        </div>
+                        <div class="bg-lime elevation-2 themeColor" [class.active-color]="brand_logo_color == 'navbar-lime'" (click)="logoColorChange('navbar-lime')">
+                        </div>
+                        <div class="bg-teal elevation-2 themeColor" [class.active-color]="brand_logo_color == 'navbar-teal'" (click)="logoColorChange('navbar-teal')">
+                        </div>
+                        <div class="bg-olive elevation-2 themeColor" [class.active-color]="brand_logo_color == 'navbar-olive'" (click)="logoColorChange('navbar-olive')">
+                        </div>
+                        <div class="elevation-2 themeColor" [class.active-color]="brand_logo_color == ''" [ngClass]="sidebar_type == 'dark' ? 'bg-gray-dark' : 'bg-white'" (click)="logoColorChange('')">
+                        </div>
+                    </div> -->
+                    <div class="d-flex flex-wrap mb-3">
+                        <div class="themeColor bg-primary elevation-2" [class.active-color]="brand_logo_color == 'navbar-primary'" (click)="logoColorChange('navbar-primary')"
+                            >
+                        </div>
+                        <div class="themeColor bg-secondary elevation-2" [class.active-color]="brand_logo_color == 'navbar-secondary'" (click)="logoColorChange('navbar-secondary')"
+                            >
+                        </div>
+                        <!-- <div class="themeColor bg-info elevation-2" [class.active-color]="brand_logo_color == 'navbar-info'" (click)="logoColorChange('navbar-info')"
+                            >
+                        </div> -->
+                        <div class="themeColor bg-success elevation-2" [class.active-color]="brand_logo_color == 'navbar-success'" (click)="logoColorChange('navbar-success')"
+                            >
+                        </div>
+                        <div class="themeColor bg-danger elevation-2" [class.active-color]="brand_logo_color == 'navbar-danger'" (click)="logoColorChange('navbar-danger')"
+                            >
+                        </div>
+                        <div class="themeColor bg-indigo elevation-2" [class.active-color]="brand_logo_color == 'navbar-indigo'" (click)="logoColorChange('navbar-indigo')"
+                            >
+                        </div>
+                        <div class="themeColor bg-purple elevation-2" [class.active-color]="brand_logo_color == 'navbar-purple'" (click)="logoColorChange('navbar-purple')"
+                            >
+                        </div>
+                        <div class="themeColor bg-pink elevation-2" [class.active-color]="brand_logo_color == 'navbar-pink'" (click)="logoColorChange('navbar-pink')" 
+                            >
+                        </div>
+                        <div class="themeColor bg-navy elevation-2" [class.active-color]="brand_logo_color == 'navbar-navy'" (click)="logoColorChange('navbar-navy')"
+                            >
+                        </div>
+                        <div class="themeColor bg-lightblue elevation-2" [class.active-color]="brand_logo_color == 'navbar-lightblue'" (click)="logoColorChange('navbar-lightblue')"
+                            >
+                        </div>
+                        <div class="themeColor bg-teal elevation-2" [class.active-color]="brand_logo_color == 'navbar-teal'" (click)="logoColorChange('navbar-teal')"
+                            >
+                        </div>
+                        <div class="themeColor bg-cyan elevation-2" [class.active-color]="brand_logo_color == 'navbar-cyan'" (click)="logoColorChange('navbar-cyan')"
+                            >
+                        </div>
+                        <!-- <div class="themeColor bg-dark elevation-2" [class.active-color]="brand_logo_color == 'navbar-dark'" (click)="logoColorChange('navbar-dark')"
+                            >
+                        </div>
+                        <div class="themeColor bg-gray-dark elevation-2" [class.active-color]="brand_logo_color == 'navbar-dark'" (click)="logoColorChange('navbar-dark')"
+                            >
+                        </div> -->
+                        <!-- <div class="themeColor bg-gray elevation-2" [class.active-color]="brand_logo_color == 'navbar-gray'" (click)="logoColorChange('navbar-gray')"
+                            >
+                        </div> -->
+                        <div class="themeColor bg-light elevation-2" [class.active-color]="brand_logo_color == 'navbar-light'" (click)="logoColorChange('navbar-light')"
+                            >
+                        </div>
+                        <div class="themeColor bg-warning elevation-2" [class.active-color]="brand_logo_color == 'navbar-warning'" (click)="logoColorChange('navbar-warning')"
+                            >
+                        </div>
+                        <!-- <div class="themeColor bg-white elevation-2" [class.active-color]="brand_logo_color == 'navbar-white'" (click)="logoColorChange('navbar-white')"
+                            >
+                        </div> -->
+                        <div class="themeColor bg-orange elevation-2" [class.active-color]="brand_logo_color == 'navbar-orange'" (click)="logoColorChange('navbar-orange')"
+                            >
+                        </div>
+                        <div class="elevation-2 themeColor" [class.active-color]="brand_logo_color == ''" [ngClass]="sidebar_type == 'dark' ? 'bg-gray-dark' : 'bg-white'" (click)="logoColorChange('')">
+                        </div>
+                    </div>
+                    <div class="d-flex"></div>
+                    <div class="d-flex flex-wrap mb-3">
+                        <div class="elevation-2 m-2">
+                            <button class="btn btn-success" type="button" (click)="saveCustomTheme()">Save</button>
+                        </div>
+                        <div class="elevation-2 m-2">
+                            <button class="btn btn-info" type="button" (click)="setDefaultTheme()">Set Default</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="os-scrollbar os-scrollbar-horizontal os-scrollbar-unusable os-scrollbar-auto-hidden">
+            <div class="os-scrollbar-track">
+                <div class="os-scrollbar-handle" style="transform: translate(0px, 0px); width: 100%;"></div>
+            </div>
+        </div>
+        <div class="os-scrollbar os-scrollbar-vertical os-scrollbar-auto-hidden">
+            <div class="os-scrollbar-track">
+                <div class="os-scrollbar-handle" style="transform: translate(0px, 0px); height: 31.348%;"></div>
+            </div>
+        </div>
+        <div class="os-scrollbar-corner"></div>
+    </div>
+</aside>
